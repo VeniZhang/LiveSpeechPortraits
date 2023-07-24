@@ -59,7 +59,7 @@ if __name__ == '__main__':
     opt = parser.parse_args()
     device = torch.device(opt.device)
     with open(join('./config/', opt.id + '.yaml')) as f:
-        config = yaml.load(f)
+        config = yaml.load(f, Loader=yaml.Loader)
     data_root = join('./data/', opt.id)
     # create the results folder
     audio_name = os.path.split(opt.driving_audio)[1][:-4]
@@ -276,7 +276,9 @@ if __name__ == '__main__':
     # generate corresponding audio, reused for all results
     tmp_audio_path = join(save_root, 'tmp.wav')
     tmp_audio_clip = audio[ : np.int32(nframe * sr / FPS)]
-    librosa.output.write_wav(tmp_audio_path, tmp_audio_clip, sr)
+    import soundfile as sf
+    sf.write(tmp_audio_path, tmp_audio_clip, sr)
+    #librosa.output.write_wav(tmp_audio_path, tmp_audio_clip, sr)
     
     
     final_path = join(save_root, audio_name + '.avi')

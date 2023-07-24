@@ -62,7 +62,7 @@ class Audio2Mel(torch.nn.Module):
             hop_length=self.hop_length,
             win_length=self.win_length,
             window=self.window,
-            center=False,
+            center=False,return_complex=False
         )
         real_part, imag_part = fft.unbind(-1)
         magnitude = torch.sqrt(real_part ** 2 + imag_part ** 2)
